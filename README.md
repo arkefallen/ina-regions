@@ -1,50 +1,66 @@
-# React + TypeScript + Vite
+# Indonesia Regions Filter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sebuah aplikasi web *Single Page Application* (SPA) sederhana untuk memfilter data hierarki wilayah di Indonesia secara interaktif. Dibuat sebagai bagian dari Technical Test Frontend Development.
 
-Currently, two official plugins are available:
+## 🎯 Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Project ini menampilkan antarmuka dua sisi (sidebar dan main area) di mana pengguna dapat memilih Provinsi, kemudian Kota/Kabupaten yang sesuai dengan provinsi tersebut, dan terakhir Kecamatan. 
 
-## Expanding the ESLint configuration
+Halaman secara dinamis akan memperbarui navigasi *breadcrumb* beserta penanda wilayah utama secara berjenjang di layar sebelah kanan. Canggihnya, pilihan yang dilakukan oleh pengguna akan secara otomatis disinkronisasikan dengan *URL Parameter*, sehingga apabila halaman di-refresh, state filter wilayah tidak akan hilang.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## ✨ Fitur Utama
 
-- Configure the top-level `parserOptions` property like this:
+- **Cascading Combobox**: Opsi pada combobox Kota/Kabupaten baru akan terbuka jika Provinsi dipilih. Begitupun Kecamatan yang bergantung pada Kota/Kabupaten.
+- **URL State Persistence**: Filter bertahan (survive) dari reload browser dengan memanfaatkan Search Parameters di URL.
+- **Responsive Typography**: Ukuran font otomatis menyesuaikan (mengecil/membesar) secara ideal dengan lebar perangkat (Mobile, Tablet, Desktop).
+- **Auto-loading Data**: Data wilayah di-fetch langsung memanfaatkan arsitektur Data Router dan Loader dari React Router v7.
+- **Reset State**: Tombol `RESET` untuk mengembalikan seluruh combobox ke kondisi awal seketika.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🛠 Tech Stack
+
+Proyek ini dibangun mengikuti praktik pengembangan Front-End modern terbaru:
+
+*   **[Vite v5](https://vite.dev/)** - Sebagai Next Generation Frontend Tooling yang bekerja super cepat.
+*   **[React v18](https://react.dev/)** - Library UI dengan Component-based Architecture.
+*   **[TypeScript](https://www.typescriptlang.org/)** - Superset JavaScript untuk type-safety komponen dan data statis.
+*   **[React Router v7](https://reactrouter.com/)** - Menangani routing dan data loading (Data Mode) tanpa framework utuh.
+*   **[Tailwind CSS v4](https://tailwindcss.com/)** - Utility-first CSS framework untuk implementasi styling yang konsisten dan pixel-perfect.
+*   **[Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans)** - Tipografi utama yang diambil langsung dari Google Fonts.
+
+## 🚀 Setup Secara Lokal
+
+Untuk menjalankan project ini ke dalam environment pengembangan lokal Anda, ikuti instruksi berikut:
+
+### Prasyarat:
+Pastikan Anda sudah menginstal **Node.js** terinstal di perangkat Anda.
+
+### Instalasi & Menjalankan Project:
+
+1. **Clone repository ini:**
+   ```bash
+   git clone https://github.com/arkefallen/ina-regions.git
+   cd ina-regions
+   ```
+
+2. **Install dependency package:**
+   ```bash
+   npm install
+   ```
+
+3. **Jalankan local development server:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Buka di Browser:**
+   Akses `http://localhost:5173` melalui web browser.
+
+## 📦 Build untuk Produksi (Publikasi)
+
+Jika Anda ingin membungkus (*build*) aplikasi untuk dipublikasikan ke platform hosting gratis (seperti Vercel, Netlify, atau GitHub Pages):
+
+```bash
+npm run build
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Perintah khusus ini akan melakukan _type-checking_ serta membuat folder `dist/` yang berisikan aset statis (HTML, CSS, JS yang sudah dikompresi) dan siap untuk langsung di-*deploy*.
